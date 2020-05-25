@@ -5,7 +5,7 @@
 set -e
 
 # Download the source code if it does not already exist.
-clone_git_repo github.com pspdev pspsdk
+clone_git_repo github.com pspdev pspsdk cleanup
 
 # Enter the source directory.
 cd pspsdk
