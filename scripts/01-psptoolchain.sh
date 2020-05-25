@@ -11,4 +11,4 @@ clone_git_repo github.com pspdev psptoolchain
 cd psptoolchain
 
 # Configure the build. - Only run a subset, to avoid duplication
-./toolchain.sh $(seq 1 7)
+./toolchain.sh 1 2 3 4 5 7
