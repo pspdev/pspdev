@@ -5,7 +5,7 @@
 set -e
 
 # Download the source code.
-clone_git_repo github.com pspdev psp-pacman
+clone_git_repo github.com pspdev psp-pacman old-ubuntu
 
 # Enter the source directory.
 cd psp-pacman
