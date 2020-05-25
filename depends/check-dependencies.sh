@@ -88,8 +88,6 @@ check_program   which
 check_program   makeinfo
 check_program   doxygen
 
-check_program   pkg-config
-
 check_program   python3
 
 # Sometimes things will be a little different on Mac OS X...
