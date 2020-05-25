@@ -5,10 +5,10 @@
 set -e
 
 # Download the source code.
-clone_git_repo github.com pspdev psptoolchain
+clone_git_repo github.com pspdev psptoolchain toolchain-only
 
 # Enter the source directory.
 cd psptoolchain
 
-# Configure the build. - Only run a subset, to avoid duplication
-./toolchain.sh 1 2 3 4 5 7
+# Configure the build.
+./toolchain.sh
