@@ -12,6 +12,7 @@ jobs:
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest]
+      fail-fast: false
 
     steps:
     - uses: actions/checkout@v2
@@ -26,7 +27,8 @@ jobs:
       if: matrix.os == 'macOS-latest'
       run: |
         brew update
-        brew install autoconf automake cmake doxygen gnu-sed libelf libtool libusb libusb-compat pkg-config wget xz
+        brew install autoconf automake cmake doxygen gnu-sed gpgme libarchive curl libelf libtool libusb libusb-compat openssl pkg-config python3 wget xz
+        export PKG_CONFIG_PATH="`brew --prefix`/opt/libarchive/lib/pkgconfig"
 
     - name: Runs all stages
       run: |
