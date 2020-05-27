@@ -24,10 +24,10 @@ jobs:
         sudo apt-get -y install autoconf automake bison bzip2 cmake doxygen \
                                 flex gettext g++ gcc git gzip libarchive-dev \
                                 libcurl4-openssl-dev libelf-dev libgpgme-dev \
-                                libncurses5-dev libreadline-dev libssl-dev \
-                                libtool-bin libusb-dev m4 make patch pkg-config \
-                                python3 python3-venv subversion tar tcl texinfo \
-                                unzip wget xz-utils
+                                libncurses5-dev libreadline-dev libsdl1.2-dev \
+                                libssl-dev libtool-bin libusb-dev m4 make patch \
+                                pkg-config python3 python3-venv subversion tar \
+                                tcl texinfo unzip wget xz-utils
 
     - name: Install on Mac
       if: matrix.os == 'macOS-latest'
@@ -35,7 +35,7 @@ jobs:
         brew update
         brew install autoconf automake cmake doxygen gnu-sed gpgme libarchive \
                      curl libelf libtool libusb libusb-compat openssl pkg-config \
-                     python3 wget xz
+                     python3 sdl wget xz
         export PKG_CONFIG_PATH="`brew --prefix`/opt/libarchive/lib/pkgconfig"
 
     - name: Runs all stages
