@@ -33,10 +33,9 @@ jobs:
       if: matrix.os == 'macOS-latest'
       run: |
         brew update
-        brew install autoconf automake cmake doxygen gnu-sed gpgme libarchive \
-                     curl libelf libtool libusb libusb-compat openssl pkg-config \
-                     python3 sdl wget xz
-        export PKG_CONFIG_PATH="`brew --prefix`/opt/libarchive/lib/pkgconfig"
+        brew install autoconf automake bash coreutils cmake curl doxygen gettext \
+                     gnu-sed gpgme intltool libarchive libelf libtool libusb \
+                     libusb-compat meson ninja openssl pkg-config sdl wget xz
 
     - name: Runs all stages
       run: |
