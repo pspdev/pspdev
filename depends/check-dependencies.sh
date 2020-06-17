@@ -22,7 +22,7 @@ function check_header
         done
     done
     
-    missing_depends+=($1)
+    missing_depends+=($1); return 1
 }
 
 function check_header_nosys
@@ -35,7 +35,7 @@ function check_header_nosys
         fi
     done
 
-    missing_depends+=($1)
+    missing_depends+=($1); return 1
 }
 
 function check_program
@@ -45,7 +45,7 @@ function check_program
         [ -x "$place/$binary" ] || [ -x "$place/$binary.exe" ] && return 0
     done
     
-    missing_depends+=($1)
+    missing_depends+=($1); return 1
 }
 
 # macOS catalina does not ship headers in default directory anymore
@@ -117,7 +117,7 @@ fi
 
 if [ ${#missing_depends[@]} -ne 0 ]; then
     echo "Couldn't find dependencies:"
-    for dep in $missing_depends; do
+    for dep in "${missing_depends[@]}"; do
         echo "  - $dep"
     done
 	exit 1
