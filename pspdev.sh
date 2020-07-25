@@ -35,19 +35,15 @@ if [ $1 ]; then
   # Sort and run the requested build scripts.
   ARGS=(`printf "%.2d\n" $* | sort -n`)
 
-  for (( i = 0; i < ${#ARGS[*]}; i++)); do
-    found=false
-    for (( j = 0; j < ${#BUILD_SCRIPTS[*]}; j++ )) ; do
-	if [ `echo ${BUILD_SCRIPTS[j - 1]} | grep -c ${ARGS[i - 1]}` != 0  ]; then
-		found=true
-   		"${BUILD_SCRIPTS[j - 1]}" || { echo "${BUILD_SCRIPTS[j - 1]}: Failed."; exit 1; }
-	else
-		found=false
-	fi
+  for ARG in ${ARGS[@]}; do
+    found=0
+    for SCRIPT in ${BUILD_SCRIPTS[@]}; do
+      if [ `basename $SCRIPT | cut -c -2` -eq $ARG ]; then
+        found=1
+        "$SCRIPT" || { echo "$SCRIPT: Failed."; exit 1; }
+      fi
     done
-    if [ !found ]; then
-    	{ echo "${ARGS[i]}: Script not found.";exit 1; }
-    fi
+    [ $found -eq 1 ] || { echo "$ARG: Script not found."; exit 1; }
   done
 else
   # Run all the existing build scripts.
