@@ -46,11 +46,7 @@ jobs:
 
     - name: Install on Mac
       if: matrix.os == 'macOS-latest'
-      run: |
-        brew update
-        brew install autoconf automake bash coreutils cmake curl doxygen gettext \
-                     gnu-sed gpgme intltool libarchive libelf libtool libusb \
-                     libusb-compat meson ninja openssl pkg-config sdl wget xz
+      run: brew bundle
 
     - name: Runs all stages
       run: |
