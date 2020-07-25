@@ -9,25 +9,40 @@ on:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
+    name: ${{ matrix.os }} (${{ matrix.arch }})
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest]
+        include:
+          - { os: ubuntu-latest, arch: x64 }
+          - { os: ubuntu-latest, arch: x86 }
+          - { os: macos-latest, arch: x64 }
       fail-fast: false
 
     steps:
     - uses: actions/checkout@v2
 
-    - name: Install on Ubuntu
+    - name: Install on Ubuntu and Configure
       if: matrix.os == 'ubuntu-latest'
       run: |
+        pkg="autoconf automake bison bzip2 cmake doxygen flex gettext \
+             git gzip libtool-bin m4 make patch pkg-config python3 python3-venv \
+             subversion tar tcl texinfo unzip wget xz-utils"
+        if [ "${{matrix.arch}}" == "x86" ]; then
+          pkg="$pkg g++-multilib gcc-multilib libarchive-dev:i386 \
+               libcurl4-openssl-dev:i386 libelf-dev:i386 libgpgme-dev:i386 \
+               libncurses5-dev:i386 libreadline-dev:i386 libsdl1.2-dev:i386 \
+               libssl-dev:i386 libusb-dev:i386"
+          sudo dpkg --add-architecture i386
+          echo "::set-env name=CC::gcc -m32"
+          echo "::set-env name=CXX::g++ -m32"
+          echo "::set-env name=PKG_CONFIG_PATH::/usr/lib/i386-linux-gnu/pkgconfig"
+        else
+          pkg="$pkg g++ gcc libarchive-dev libcurl4-openssl-dev libelf-dev \
+               libgpgme-dev libncurses5-dev libreadline-dev libsdl1.2-dev \
+               libssl-dev libusb-dev"
+        fi
         sudo apt-get update
-        sudo apt-get -y install autoconf automake bison bzip2 cmake doxygen \
-                                flex gettext g++ gcc git gzip libarchive-dev \
-                                libcurl4-openssl-dev libelf-dev libgpgme-dev \
-                                libncurses5-dev libreadline-dev libsdl1.2-dev \
-                                libssl-dev libtool-bin libusb-dev m4 make patch \
-                                pkg-config python3 python3-venv subversion tar \
-                                tcl texinfo unzip wget xz-utils
+        sudo apt-get -y install $pkg
 
     - name: Install on Mac
       if: matrix.os == 'macOS-latest'
@@ -53,12 +68,16 @@ jobs:
 
     - uses: actions/upload-artifact@v2
       with:
-        name: pspdev-${{ steps.slug.outputs.sha8 }}-${{matrix.os}}
+        name: pspdev-${{ steps.slug.outputs.sha8 }}-${{ matrix.os }}-${{ matrix.arch }}
         path: pspdev.tar.gz
 
     - name: Rename pspdev.tar.gz file
       run: |
-        mv pspdev.tar.gz pspdev-${{matrix.os}}.tar.gz
+        if [ "${{matrix.os}}" == "macOS-latest" ]; then
+          mv pspdev.tar.gz pspdev-macOS.tar.gz
+        elif [ "${{matrix.os}}" == "ubuntu-latest" ]; then
+          mv pspdev.tar.gz pspdev-linux-${{ matrix.arch }}.tar.gz
+        fi
 
     - name: Extract tag name
       if: startsWith(github.ref, 'refs/tags/')
@@ -69,7 +88,7 @@ jobs:
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
-        files: pspdev-${{matrix.os}}.tar.gz
+        files: pspdev-*.tar.gz
         tag_name: ${{ steps.tag.outputs.VERSION }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
