@@ -14,19 +14,49 @@ header_paths=(
 
 missing_depends=()
 
-function check_header
+function check_header_path
 {
+	for header_path in ${header_paths[@]}; do
+    		if [ "$1" == "${header_path}" ] ; then
+			return 1
+		fi
+	done
+	header_paths+=( "$1" )
+	return 0
+}
+
+function check_header 
+{
+    package_name=`pkg-config --list-package-names | grep $1`
+    cflags=`pkg-config ${package_name} --cflags-only-I`
+    includedir=`pkg-config --variable=includedir ${package_name}`
+
+    check_header_path ${includedir}
+
+    for place in ${cflags[@]}; do
+    	check_header_path "${place#-I}"
+    done
+
     for place in ${header_paths[@]}; do
         for name in ${@:2}; do
             [ -f "$place/$name" ] && return 0
         done
     done
-    
     missing_depends+=($1); return 1
 }
 
 function check_header_nosys
 {
+    package_name=`pkg-config --list-package-names | grep $1`
+    cflags=`pkg-config ${package_name} --cflags-only-I`
+    includedir=`pkg-config --variable=includedir ${package_name}`
+
+    check_header_path ${includedir}
+
+    for place in ${cflags[@]}; do
+    	check_header_path "${place#-I}"
+    done
+
     for place in ${header_paths[@]}; do
         if [ "${place:0:12}" != "/usr/include" ]; then
             for name in ${@:2}; do
@@ -54,7 +84,7 @@ if [ "$(uname)" == "Darwin" ]; then
 fi
 
 check_header    libelf          elf.h libelf.h libelf/libelf.h gelf.h libelf/gelf.h
-check_header    libusb          usb.h
+check_header    libusb          libusb.h
 check_header    ncurses         ncurses.h ncurses/ncurses.h
 check_header    zlib            zlib.h
 check_header    libcurl         curl/curl.h
