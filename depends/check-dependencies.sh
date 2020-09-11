@@ -42,6 +42,7 @@ function check_header
             [ -f "$place/$name" ] && return 0
         done
     done
+
     missing_depends+=($1); return 1
 }
 
