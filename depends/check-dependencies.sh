@@ -14,8 +14,32 @@ header_paths=(
 
 missing_depends=()
 
+function check_header_path
+{
+	for header_path in ${header_paths[@]}; do
+    		if [ "$1" == "${header_path}" ] ; then
+			return 1
+		fi
+	done
+	header_paths+=( "$1" )
+	return 0
+}
+
+function check_header_pkg_config
+{
+    [ -x pkg-config ] && return 0
+    pkg_str=(`pkg-config --list-all | grep $1`)
+    pkg_dir=(`pkg-config ${pkg_str} --cflags-only-I`)
+    pkg_inc=(`pkg-config ${pkg_str} --variable=includedir`)
+    check_header_path ${pkg_inc}
+    check_header_path ${pkg_dir#-I}
+    return 1
+}
+
 function check_header
 {
+    check_header_pkg_config $1
+
     for place in ${header_paths[@]}; do
         for name in ${@:2}; do
             [ -f "$place/$name" ] && return 0
@@ -27,6 +51,8 @@ function check_header
 
 function check_header_nosys
 {
+    check_header_pkg_config $1
+
     for place in ${header_paths[@]}; do
         if [ "${place:0:12}" != "/usr/include" ]; then
             for name in ${@:2}; do
@@ -54,7 +80,7 @@ if [ "$(uname)" == "Darwin" ]; then
 fi
 
 check_header    libelf          elf.h libelf.h libelf/libelf.h gelf.h libelf/gelf.h
-check_header    libusb          usb.h
+check_header    libusb          libusb.h
 check_header    ncurses         ncurses.h ncurses/ncurses.h
 check_header    zlib            zlib.h
 check_header    libcurl         curl/curl.h
@@ -86,8 +112,6 @@ check_program   which
 check_program   makeinfo
 check_program   doxygen
 
-check_program   sdl-config
-
 check_program   python3
 
 # Sometimes things will be a little different on Mac OS X...
@@ -95,7 +119,7 @@ if [ "$(uname)" == "Darwin" ]; then
     # readline should be checked carefully on OS X to save us from being
     # fooled by BSD libedit.
     # libarchive and openssl are keg-only
-    if brew --version 1>/dev/null 2>&1; then
+    if command -v brew 1>/dev/null 2>&1; then
         header_paths+=("`brew --prefix`/opt/readline/include")
         header_paths+=("`brew --prefix`/opt/libarchive/include")
         header_paths+=("`brew --prefix`/opt/openssl/include")
