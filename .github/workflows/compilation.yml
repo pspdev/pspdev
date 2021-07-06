@@ -33,9 +33,9 @@ jobs:
                libncurses5-dev:i386 libreadline-dev:i386 libsdl1.2-dev:i386 \
                libssl-dev:i386 libusb-dev:i386"
           sudo dpkg --add-architecture i386
-          echo "::set-env name=CC::gcc -m32"
-          echo "::set-env name=CXX::g++ -m32"
-          echo "::set-env name=PKG_CONFIG_PATH::/usr/lib/i386-linux-gnu/pkgconfig"
+          echo "CC=gcc -m32" >> $GITHUB_ENV
+          echo "CXX=g++ -m32" >> $GITHUB_ENV
+          echo "PKG_CONFIG_PATH=/usr/lib/i386-linux-gnu/pkgconfig" >> $GITHUB_ENV
         else
           pkg="$pkg g++ gcc libarchive-dev libcurl4-openssl-dev libelf-dev \
                libgpgme-dev libncurses5-dev libreadline-dev libsdl1.2-dev \
