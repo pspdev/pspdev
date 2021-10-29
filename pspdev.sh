@@ -33,8 +33,7 @@ BUILD_SCRIPTS=(`ls ../scripts/*.sh | sort`)
 # If specific steps were requested...
 if [ $1 ]; then
   # Sort and run the requested build scripts.
-  ARGS=(`printf "%.2d\n" $* | sort -n`)
-
+  ARGS=(`printf "%.02d\n" $(trlz $@) | sort -n`)
   for ARG in ${ARGS[@]}; do
     found=0
     for SCRIPT in ${BUILD_SCRIPTS[@]}; do
