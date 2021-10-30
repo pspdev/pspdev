@@ -22,6 +22,8 @@ cd build || { echo "ERROR: Could not enter the build directory."; exit $(false);
 # Fetch the depend scripts.
 DEPEND_SCRIPTS=(`ls ../depends/*.sh | sort`)
 
+SCRIPT_PREFIX_LENGTH=2
+
 # Run all the depend scripts.
 for SCRIPT in ${DEPEND_SCRIPTS[@]}; do
   "$SCRIPT" || { echo "$SCRIPT: Failed."; exit $(false); }
@@ -33,11 +35,11 @@ BUILD_SCRIPTS=(`ls ../scripts/*.sh | sort`)
 # If specific steps were requested...
 if [ $1 ]; then
   # Sort and run the requested build scripts.
-  ARGS=(`printf "%.02d\n" $(trlz $@) | sort -n`)
+  ARGS=(`printf "%.0${SCRIPT_PREFIX_LENGTH}d\n" $(trlz $@) | sort -n`)
   for ARG in ${ARGS[@]}; do
     found=$(false)
     for SCRIPT in ${BUILD_SCRIPTS[@]}; do
-      if [ `basename $SCRIPT | cut -c -2` -eq $ARG ]; then
+      if [ `basename $SCRIPT | cut -c -${SCRIPT_PREFIX_LENGTH}` -eq $ARG ]; then
         found=$(true)
         "$SCRIPT" || { echo "$SCRIPT: Failed."; exit $(false); }
       fi
