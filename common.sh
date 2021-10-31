@@ -34,7 +34,7 @@ function auto_extract
         "bz2"|"tbz2") tar --no-same-owner -xjf $path ;;
         "xz"|"txz") tar --no-same-owner -xJf $path ;;
         "zip") unzip $path ;;
-        *) echo "I don't know how to extract $ext archives!"; return 1 ;;
+        *) echo "I don't know how to extract $ext archives!"; return $(false) ;;
     esac
     
     return $?
@@ -84,5 +84,5 @@ function clone_git_repo
     
     # If it does not exist at this point, it was never there in the first place
     # or it was nuked due to being corrupted. Clone and track $branch, please.
-    [ -d $repo ] || git clone --recursive --depth 1 -b $branch https://$host/$user/$repo.git $repo || return 1
+    [ -d $repo ] || git clone --recursive --depth 1 -b $branch https://$host/$user/$repo.git $repo || return $(false)
 }
