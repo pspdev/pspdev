@@ -5,7 +5,7 @@
 set -e
 
 # Download the source code.
-clone_git_repo github.com pspdev psptoolchain toolchain-only
+clone_git_repo github.com jopadan psptoolchain
 
 # Enter the source directory.
 cd psptoolchain
