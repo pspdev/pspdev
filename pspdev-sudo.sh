@@ -1,7 +1,7 @@
 #!/bin/bash
 # pspdev-sudo.sh
  
-INSTALLDIR=/opt/toolchains/psp/jopadan
+INSTALLDIR=/usr/local/pspdev
  
 # Enter the pspdev directory
 cd "`dirname $0`" || { echo "ERROR: Could not enter the pspdev directory."; exit $(false); }
