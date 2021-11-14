@@ -24,9 +24,9 @@ make --quiet -j $PROC_NR all            || { exit 1; }
 make --quiet -j $PROC_NR install        || { exit 1; }
 make --quiet -j $PROC_NR clean          || { exit 1; }
 
-## gcc needs to include libpsplibc libpsputility libpspnet_inet libpspnet_resolver libpspuser libpspkernel
+## gcc needs to include libcglue libpsputility libpspnet_inet libpspnet_resolver libpspuser libpspkernel
 ## from pspsdk to be able to build executables, because they are part of the standard libraries
-ln -sf "$PSPDEV/psp/sdk/lib/libpsplibc.a" "$PSPDEV/psp/lib/libpsplibc.a" || { exit 1; }
+ln -sf "$PSPDEV/psp/sdk/lib/libcglue.a" "$PSPDEV/psp/lib/libcglue.a" || { exit 1; }
 ln -sf "$PSPDEV/psp/sdk/lib/libpsputility.a" "$PSPDEV/psp/lib/libpsputility.a" || { exit 1; }
 ln -sf "$PSPDEV/psp/sdk/lib/libpspnet_inet.a" "$PSPDEV/psp/lib/libpspnet_inet.a" || { exit 1; }
 ln -sf "$PSPDEV/psp/sdk/lib/libpspnet_resolver.a" "$PSPDEV/psp/lib/libpspnet_resolver.a" || { exit 1; }
