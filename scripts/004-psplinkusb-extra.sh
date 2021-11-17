@@ -2,7 +2,7 @@
 # psplinkusb by fjtrujy
 
 ## Download the source code.
-REPO_URL="https://github.com/fjtrujy/psplinkusb"
+REPO_URL="https://github.com/pspdev/psplinkusb"
 REPO_FOLDER="psplinkusb"
 BRANCH_NAME="master"
 if test ! -d "$REPO_FOLDER"; then

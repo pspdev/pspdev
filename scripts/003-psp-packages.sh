@@ -2,7 +2,7 @@
 # psp-packages by fjtrujy
 
 ## Download the source code.
-REPO_URL="https://github.com/fjtrujy/psp-packages"
+REPO_URL="https://github.com/pspdev/psp-packages"
 REPO_FOLDER="psp-packages"
 BRANCH_NAME="master"
 if test ! -d "$REPO_FOLDER"; then
@@ -20,4 +20,4 @@ if [ "${OSVER:0:5}" == MINGW ]; then
 fi
 
 # Install all packages
-./install-latest.sh  "fjtrujy/psp-packages"  $install_method || { exit 1; }
+./install-latest.sh  "pspdev/psp-packages"  $install_method || { exit 1; }

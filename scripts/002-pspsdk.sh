@@ -2,7 +2,7 @@
 # pspsdk.sh by fjtrujy
 
 ## Download the source code.
-REPO_URL="https://github.com/fjtrujy/pspsdk"
+REPO_URL="https://github.com/pspdev/pspsdk"
 REPO_FOLDER="pspsdk"
 BRANCH_NAME="master"
 if test ! -d "$REPO_FOLDER"; then
