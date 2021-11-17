@@ -2,7 +2,7 @@
 # psptoolchain.sh by fjtrujy
 
 ## Download the source code.
-REPO_URL="https://github.com/fjtrujy/psptoolchain"
+REPO_URL="https://github.com/pspdev/psptoolchain"
 REPO_FOLDER="psptoolchain"
 BRANCH_NAME="master"
 if test ! -d "$REPO_FOLDER"; then
