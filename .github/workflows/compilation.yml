@@ -123,3 +123,41 @@ jobs:
         export PSPDEV=$PWD/pspdev
         export PATH=$PATH:$PSPDEV/bin
         ./build-all.sh
+
+    - name: Get short SHA
+      id: slug
+      run: echo "::set-output name=sha8::${MSYSTEM}-sha[$(echo ${GITHUB_SHA} | cut -c1-8)]"
+
+    - name: Prepare pspdev folder
+      run: |
+        tar -zcvf pspdev-${{matrix.os[0]}}.tar.gz pspdev
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: pspdev-${{matrix.os}}-${{ steps.slug.outputs.sha8 }}
+        path: pspdev-${{matrix.os}}.tar.gz
+
+    - name: Extract tag name
+      if: startsWith(github.ref, 'refs/tags/')
+      id: tag
+      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+
+    - name: Create pre-release
+      if: github.ref == 'refs/heads/master'
+      uses: softprops/action-gh-release@v1
+      with:
+        files: pspdev-${{matrix.os}}.tar.gz
+        prerelease: true
+        name: "Development build"
+        tag_name: "latest"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Release
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v1
+      with:
+        files: pspdev-${{matrix.os}}.tar.gz
+        tag_name: ${{ steps.tag.outputs.VERSION }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
