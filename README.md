@@ -78,4 +78,14 @@ If you download the pre-built macOS binaries and get a security error such as _`
 xattr -dr com.apple.quarantine path/to/prebuilt/pspdev
 ```
 
+### Local package builds
+
+The toolchain (binutils, gcc), the SDK (pspsdk) and the host tools are built locally. However the provided packages (psp-packages) are installed via `psp-pacman` (or a similar mechanism if not available), which fetches packages from [github releases](https://github.com/pspdev/psp-packages/releases). If you wish to build these packages locally, you might define the variable *LOCAL_PACKAGE_BUILD* which will force pacman to build the packages from source instead of downloading them:
+
+```bash
+LOCAL_PACKAGE_BUILD=1 ./build-all.sh
+```
+
+This is particularly useful if you are testing changes in the toolchain (ie. gcc or binutils) and want to test your changes end to end. It can also be useful if you want a hermetic build and don't want to use any of the provided binaries.
+
 ## Thanks

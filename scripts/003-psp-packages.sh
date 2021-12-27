@@ -19,5 +19,10 @@ if [ "${OSVER:0:5}" == MINGW ]; then
 	install_method="manually"
 fi
 
-# Install all packages
-./install-latest.sh  "pspdev/psp-packages"  $install_method || { exit 1; }
+if [ -z "$LOCAL_PACKAGE_BUILD" ]; then
+  # Install all packages
+  ./install-latest.sh  "pspdev/psp-packages"  $install_method || { exit 1; }
+else
+  # Build and install the packages
+  ./build.sh --install
+fi
