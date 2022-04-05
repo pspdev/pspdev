@@ -16,3 +16,4 @@ ENV PSPDEV /usr/local/pspdev
 ENV PATH $PATH:${PSPDEV}/bin
 
 COPY --from=0 ${PSPDEV} ${PSPDEV}
+RUN apk add gmp mpc1 mpfr4 make
