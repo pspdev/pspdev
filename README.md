@@ -31,6 +31,13 @@ sudo ./prepare-debian-ubuntu.sh
 sudo ./prepare-fedora.sh
 ```
 
+
+### Arch
+```bash
+sudo ./prepare-arch.sh
+```
+
+
 ### OSX
 ```bash
 sudo ./prepare-mac-os.sh
