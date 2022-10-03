@@ -8,6 +8,7 @@ Main PSP Repo for building the whole `PSP Development` environment in your local
 
 - [PSPDEV](#pspdev)
   - [Table of Contents](#table-of-contents)
+  - [Up and running](#up-and-running)
   - [What these scripts do](#what-these-scripts-do)
   - [Requirements](#requirements)
     - [Ubuntu/Debian](#ubuntudebian)
@@ -21,6 +22,12 @@ Main PSP Repo for building the whole `PSP Development` environment in your local
   - [Thanks](#thanks)
 
 This program will automatically build and install the whole compiler and other tools used in the creation of Homebrew software for the Sony PlayStation Portable® video game system.
+
+## Up and running
+
+You can get started very quickly by grabbing the latest development pre-releases from the [releases' page for your platform](https://github.com/pspdev/pspdev/releases) and extract them to the `pspdev` directory in your `path`.
+
+Export the `PSPDEV` environment variable to point to the `pspdev` directory.
 
 ## What these scripts do
 
