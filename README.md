@@ -27,7 +27,12 @@ This program will automatically build and install the whole compiler and other t
 
 You can get started very quickly by grabbing the latest development pre-releases from the [releases' page for your platform](https://github.com/pspdev/pspdev/releases) and extract them to the `pspdev` directory in your `path`.
 
-Export the `PSPDEV` environment variable to point to the `pspdev` directory.
+Export the `PSPDEV` environment variable to point to the `pspdev` directory. For example:
+
+  ```bash
+  export PSPDEV=~/pspdev
+  export PATH=$PATH:$PSPDEV/bin
+  ```
 
 ## What these scripts do
 
@@ -76,7 +81,7 @@ sudo ./prepare-mac-os.sh
     sudo rm -rf $PSPDEV
     ```
 
-1. Ensure that you have enough permissions for managing PSPDEV location (default to `/usr/local/pspdev`, but you can use a different path). PSPDEV location MUST NOT have spaces or special characters in its path! PSPDEV should be an absolute path. On Unix systems, if the command `mkdir -p $PSPDEV` fails for you, you can set access for the current user by running commands:
+2. Ensure that you have enough permissions for managing PSPDEV location (default to `/usr/local/pspdev`, but you can use a different path). PSPDEV location MUST NOT have spaces or special characters in its path! PSPDEV should be an absolute path. On Unix systems, if the command `mkdir -p $PSPDEV` fails for you, you can set access for the current user by running commands:
 
     ```bash
     export PSPDEV=/usr/local/pspdev
@@ -84,7 +89,7 @@ sudo ./prepare-mac-os.sh
     sudo chown -R $USER: $PSPDEV
     ```
 
-1. Add this to your login script (example: `~/.bash_profile`)
+3. Add this to your login script (example: `~/.bash_profile`)
     **Note:** Ensure that you have full access to the PSPDEV path. You can change the PSPDEV path with the following requirements: only use absolute paths, don't use spaces, only use Latin characters.
 
     ```bash
@@ -92,7 +97,7 @@ sudo ./prepare-mac-os.sh
     export PATH=$PATH:$PSPDEV/bin
     ```
 
-1. Run build-all.sh
+4. Run build-all.sh
 
     ```bash
     ./build-all.sh
