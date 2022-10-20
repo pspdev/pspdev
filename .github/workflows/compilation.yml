@@ -64,7 +64,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Release
-      if: ${{ github.ref_type == "tag" }}
+      if: ${{ github.ref_type == 'tag' }}
       uses: softprops/action-gh-release@v1
       with:
         files: pspdev-${{matrix.os[0]}}.tar.gz
