@@ -97,7 +97,7 @@ jobs:
     container: ${{ matrix.os }}:latest
     strategy:
       matrix:
-        os: [ubuntu, fedora]
+        os: [fedora]
 
     steps:
     - uses: actions/checkout@v2
@@ -130,7 +130,7 @@ jobs:
 
     - name: Prepare pspdev folder
       run: |
-        tar -zcvf pspdev-${{matrix.os[0]}}.tar.gz pspdev
+        tar -zcvf pspdev-${{matrix.os}}.tar.gz pspdev
 
     - uses: actions/upload-artifact@v2
       with:
