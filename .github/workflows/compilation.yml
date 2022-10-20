@@ -53,7 +53,7 @@ jobs:
         path: pspdev-${{matrix.os[0]}}.tar.gz
 
     - name: Create pre-release
-      if: ${{ github.ref == 'refs/heads/main' }}
+      if: ${{ github.ref == 'refs/heads/master' }}
       uses: softprops/action-gh-release@v1
       with:
         files: pspdev-${{matrix.os[0]}}.tar.gz
@@ -106,7 +106,7 @@ jobs:
         path: pspdev-${{matrix.container[0]}}-${{matrix.container[1]}}.tar.gz
 
     - name: Create pre-release
-      if: ${{ github.ref == 'refs/heads/main' }}
+      if: ${{ github.ref == 'refs/heads/master' }}
       uses: softprops/action-gh-release@v1
       with:
         files: pspdev-${{matrix.container[0]}}-${{matrix.container[1]}}.tar.gz
