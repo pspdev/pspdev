@@ -71,3 +71,56 @@ jobs:
         tag_name: ${{ github.ref_name }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-Dockers:
+    runs-on: ubuntu-latest
+    container: ${{ matrix.container[0] }}:${{ matrix.container[1] }}
+    strategy:
+      matrix:
+        container: [[fedora, latest]]
+      fail-fast: false
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install dependencies Fedora
+      if: ${{ matrix.container[0] == 'fedora' }}
+      run: |
+        dnf -y install @development-tools gcc gcc-c++ g++ wget git autoconf automake python3 python3-pip make cmake pkgconf \
+          libarchive-devel openssl-devel gpgme-devel libtool gettext texinfo bison flex gmp-devel mpfr-devel libmpc-devel ncurses-devel diffutils \
+          libusb-devel readline-devel libcurl-devel
+
+    - name: Runs full build in shell
+      run: |
+        export PSPDEV=$PWD/pspdev
+        export PATH=$PATH:$PSPDEV/bin
+        ./build-all.sh
+
+    - name: Prepare pspdev folder
+      run: |
+        tar -zcvf pspdev-${{matrix.container[0]}}-${{matrix.container[1]}}.tar.gz pspdev
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: pspdev-${{matrix.container[0]}}-${{matrix.container[1]}}
+        path: pspdev-${{matrix.container[0]}}-${{matrix.container[1]}}.tar.gz
+
+    - name: Create pre-release
+      if: ${{ github.ref == 'refs/heads/main' }}
+      uses: softprops/action-gh-release@v1
+      with:
+        files: pspdev-${{matrix.container[0]}}-${{matrix.container[1]}}.tar.gz
+        prerelease: true
+        name: "Development build"
+        tag_name: "latest"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Release
+      if: ${{ github.ref_type == 'tag' }}
+      uses: softprops/action-gh-release@v1
+      with:
+        files: pspdev-${{matrix.container[0]}}-${{matrix.container[1]}}.tar.gz
+        tag_name: ${{ github.ref_name }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
