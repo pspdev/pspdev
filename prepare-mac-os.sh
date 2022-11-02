@@ -47,7 +47,7 @@ fi
 # actual installation
 if [ $try_brew -eq 1 ]; then
 	CURRENT_USER=$(stat -f '%Su' /dev/console)
-	sudo -u $CURRENT_USER brew install autoconf automake cmake gnu-sed bash openssl libtool libarchive gettext texinfo bison flex gsl gmp mpfr
+	sudo -u $CURRENT_USER brew install autoconf automake cmake gnu-sed bash openssl libtool libarchive gettext texinfo bison flex gsl gmp mpfr gpgme
 	exit
 fi
 if [ $try_port -eq 1 ]; then
