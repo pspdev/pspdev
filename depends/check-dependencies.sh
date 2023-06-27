@@ -20,6 +20,7 @@ function check_program
     fi
 }
 
+check_program   which
 check_program   git
 check_program   patch
 check_program   autoconf
