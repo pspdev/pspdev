@@ -2,6 +2,8 @@ ARG BASE_DOCKER_IMAGE
 
 FROM $BASE_DOCKER_IMAGE
 
+ENV CFLAGS -O2 -fipa-pta
+
 COPY . /src
 
 # There are some dependencies needed because it is checked by "depends" scripts
