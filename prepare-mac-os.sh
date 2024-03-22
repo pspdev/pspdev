@@ -11,6 +11,11 @@ if [ $# -gt 1 ]; then
 	show_help
 fi
 
+brewPath="/usr/local/bin/brew"
+if [ -e "/opt/homebrew/bin/brew" ]; then
+    brewPath="/opt/homebrew/bin/brew"
+fi
+
 # default is autodetection
 try_brew=1
 try_port=1
@@ -25,13 +30,13 @@ if [ $# -eq 1 ]; then
 	esac
 fi
 
-if ! [ -e "/usr/local/bin/brew" -o -e "/opt/local/bin/port" ]; then
+if ! [ -e "$brewPath" -o -e "/opt/local/bin/port" ]; then
 	echo "Go install Homebrew from http://brew.sh/ or MacPorts from http://www.macports.org/ first, then we can talk!"
 	exit 1
 fi
 
 # sanity checks
-if [ $try_brew -eq 1 -a ! -e "/usr/local/bin/brew" ]; then
+if [ $try_brew -eq 1 -a ! -e "$brewPath" ]; then
 	echo "Not trying Homebrew, because it is not installed."
 	try_brew=0
 fi
