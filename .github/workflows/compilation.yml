@@ -31,15 +31,15 @@ jobs:
       if: startsWith( matrix.os[0], 'macos' )
       run: |
         brew update
-        brew install gettext texinfo bison flex gnu-sed ncurses gsl gmp mpfr autoconf automake cmake libusb-compat libarchive gpgme bash openssl libtool
-        gsed -i '/Requires.private: iconv/d' /usr/local/opt/libarchive/lib/pkgconfig/libarchive.pc || true
+        brew install gettext texinfo bison flex gnu-sed gsl gmp mpfr autoconf automake cmake libusb-compat libarchive gpgme bash openssl libtool
+        gsed -i '/Requires.private: iconv/d' /opt/homebrew/opt/libarchive/lib/pkgconfig/libarchive.pc || true
         echo "MSYSTEM=x64" >> $GITHUB_ENV
 
     - name: Runs full build in shell
       run: |
-        export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
-        export PATH="/usr/local/opt/libtool/libexec/gnubin:$PATH"
-        export PKG_CONFIG_PATH="/usr/local/opt/libarchive/lib/pkgconfig:/usr/local/opt/openssl@3/lib/pkgconfig"
+        export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
+        export PATH="/opt/homebrew/opt/libtool/libexec/gnubin:$PATH"
+        export PKG_CONFIG_PATH="/opt/homebrew/opt/libarchive/lib/pkgconfig:/opt/homebrew/opt/openssl@3/lib/pkgconfig"
         export PSPDEV=$PWD/pspdev
         export PATH=$PATH:$PSPDEV/bin
         ./build-all.sh
