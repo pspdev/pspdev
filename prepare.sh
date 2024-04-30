@@ -17,7 +17,7 @@ else
         sudo apt-get update
         sudo apt-get -y install texinfo bison flex gettext libgmp3-dev libmpfr-dev libmpc-dev libusb-dev libreadline-dev libcurl4 libcurl4-openssl-dev libssl-dev libarchive-dev libgpgme-dev
     ;;
-    rhel)
+    rhel | fedora)
          dnf -y install @development-tools gcc gcc-c++ g++ wget git autoconf automake python3 python3-pip make cmake pkgconf \
           libarchive-devel openssl-devel gpgme-devel libtool gettext texinfo bison flex gmp-devel mpfr-devel libmpc-devel ncurses-devel diffutils \
           libusb-compat-0.1-devel readline-devel libcurl-devel which glibc-gconv-extra xz
