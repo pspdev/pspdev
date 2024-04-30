@@ -51,28 +51,8 @@ These scripts download (`git clone`) and install:
 - If you don't have those.
 We offer a script to help you for installing dependencies:
 
-### Ubuntu/Debian
-
 ```bash
-sudo ./prepare-debian-ubuntu.sh
-```
-
-### Fedora
-
-```bash
-sudo ./prepare-fedora.sh
-```
-
-### Arch
-
-```bash
-sudo ./prepare-arch.sh
-```
-
-### OSX
-
-```bash
-sudo ./prepare-mac-os.sh
+sudo ./prepare.sh
 ```
 
 1. _Optional._ If you are upgrading from the previous version of the PSPDEV environment, it is highly recommended removing the content of the PSPDEV folder before upgrade. This is a necessary step after the major toolchain upgrade.
