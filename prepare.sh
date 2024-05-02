@@ -3,10 +3,17 @@
 echo "Detecting OS and installing packages required for PSP Toolchain"
 
 #Handle macOS first
-if [[ $(uname) = "Darwin" ]]; then
+if [ "$(uname -s)" = "Darwin" ]; then
+  ## Check if using brew
+  if command -v brew &> /dev/null; then
     brew update
 	brew install gettext texinfo bison flex gnu-sed ncurses gsl gmp mpfr autoconf automake cmake libusb-compat libarchive gpgme bash openssl libtool
-
+    brew reinstall openssl # https://github.com/Homebrew/homebrew-core/issues/169728#issuecomment-2074958306
+  fi
+  ## Check if using MacPorts
+  if command -v port &> /dev/null; then
+    sudo port install autoconf automake cmake doxygen gsed libelf libtool pkgconfig
+  fi
 else
 
     TESTOS=$(cat /etc/os-release | grep -w "ID" | cut -d '=' -f2)

@@ -11,14 +11,18 @@ jobs:
     runs-on: ${{ matrix.os[0] }}
     strategy:
       matrix:
-        os: [[macos-13, bash], [ubuntu-latest, bash]]
+        os: [
+          [macos-latest, arm64, bash],
+          [macos-13, x86_64, bash],
+          [ubuntu-latest, x86_64, bash]
+        ]
       fail-fast: false
     defaults:
      run:
-      shell: ${{ matrix.os[1] }} {0}
+      shell: ${{ matrix.os[2] }} {0}
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     
     - name : Install dependencies on required OS
       run: | 
@@ -35,18 +39,18 @@ jobs:
 
     - name: Prepare pspdev folder
       run: |
-        tar -zcvf pspdev-${{matrix.os[0]}}.tar.gz pspdev
+        tar -zcvf pspdev-${{matrix.os[0]}}-${{matrix.os[1]}}.tar.gz pspdev
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
-        name: pspdev-${{matrix.os[0]}}
-        path: pspdev-${{matrix.os[0]}}.tar.gz
+        name: pspdev-${{matrix.os[0]}}-${{matrix.os[1]}}
+        path: pspdev-${{matrix.os[0]}}-${{matrix.os[1]}}.tar.gz
 
     - name: Create pre-release
       if: ${{ github.ref == 'refs/heads/master' }}
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
-        files: pspdev-${{matrix.os[0]}}.tar.gz
+        files: pspdev-${{matrix.os[0]}}-${{matrix.os[1]}}.tar.gz
         prerelease: true
         name: "Development build"
         tag_name: "latest"
@@ -55,9 +59,9 @@ jobs:
 
     - name: Release
       if: ${{ github.ref_type == 'tag' }}
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
-        files: pspdev-${{matrix.os[0]}}.tar.gz
+        files: pspdev-${{matrix.os[0]}}-${{matrix.os[1]}}.tar.gz
         tag_name: ${{ github.ref_name }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -71,7 +75,7 @@ jobs:
       fail-fast: false
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Install dependencies Fedora
       if: ${{ matrix.container[0] == 'fedora' }}
@@ -88,14 +92,14 @@ jobs:
       run: |
         tar -zcvf pspdev-${{matrix.container[0]}}-${{matrix.container[1]}}.tar.gz pspdev
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: pspdev-${{matrix.container[0]}}-${{matrix.container[1]}}
         path: pspdev-${{matrix.container[0]}}-${{matrix.container[1]}}.tar.gz
 
     - name: Create pre-release
       if: ${{ github.ref == 'refs/heads/master' }}
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
         files: pspdev-${{matrix.container[0]}}-${{matrix.container[1]}}.tar.gz
         prerelease: true
@@ -106,7 +110,7 @@ jobs:
 
     - name: Release
       if: ${{ github.ref_type == 'tag' }}
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
         files: pspdev-${{matrix.container[0]}}-${{matrix.container[1]}}.tar.gz
         tag_name: ${{ github.ref_name }}
