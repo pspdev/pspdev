@@ -51,4 +51,4 @@ jobs:
         push: true
         tags: ${{ github.repository }}:${{ env.DOCKER_TAG }}
         build-args: |
-          BASE_DOCKER_IMAGE=ghcr.io/${{ github.repository_owner }}/psp-packages:${{ env.DOCKER_TAG }}
+          BASE_DOCKER_IMAGE=ghcr.io/${{ github.repository_owner }}/psp-packages:latest
