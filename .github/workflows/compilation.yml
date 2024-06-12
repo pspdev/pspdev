@@ -75,15 +75,16 @@ jobs:
       fail-fast: false
 
     steps:
-    - uses: actions/checkout@v4
-
     - name: Install dependencies Fedora
       if: ${{ matrix.container[0] == 'fedora' }}
       run: |
         ./prepare.sh
 
+    - uses: actions/checkout@v4
+
     - name: Runs full build in shell
       run: |
+        chown -R $(id -nu):$(id -ng) .
         export PSPDEV=$PWD/pspdev
         export PATH=$PATH:$PSPDEV/bin
         ./build-all.sh
