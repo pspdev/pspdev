@@ -75,6 +75,11 @@ jobs:
       fail-fast: false
 
     steps:
+    - name: Install git on Fedora
+      if: matrix.os[0] == 'fedora'
+      run: |
+        dnf -y install git
+
     - uses: actions/checkout@v4
 
     - name: Install dependencies Fedora
@@ -84,6 +89,7 @@ jobs:
 
     - name: Runs full build in shell
       run: |
+        chown -R $(id -nu):$(id -ng) .
         export PSPDEV=$PWD/pspdev
         export PATH=$PATH:$PSPDEV/bin
         ./build-all.sh
