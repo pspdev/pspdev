@@ -76,7 +76,7 @@ jobs:
 
     steps:
     - name: Install git on Fedora
-      if: matrix.os[0] == 'fedora'
+      if: ${{ matrix.container[0] == 'fedora' }}
       run: |
         dnf -y install git
 
