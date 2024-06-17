@@ -11,5 +11,5 @@ else
 	cd $REPO_FOLDER && git fetch origin && git reset --hard origin/${BRANCH_NAME} || { exit 1; }
 fi
 
-## Boostrap and config
+## Build and install pspsdk
 ./build-and-install.sh || { exit 1; }
