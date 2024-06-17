@@ -1,0 +1,20 @@
+name: Tag-Release
+
+on:
+  schedule:
+  - cron: 0 17 1 * *
+  repository_dispatch:
+    types: [tag_release]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Tag new release name
+      run: |
+        export TAG="$(date +"v%Y%m%d")"
+        git tag "${TAG}"
+        git push origin "${TAG}"
