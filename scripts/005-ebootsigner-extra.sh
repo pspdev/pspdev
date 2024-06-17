@@ -19,3 +19,10 @@ make --quiet -j $PROC_NR clean          || { exit 1; }
 make --quiet -j $PROC_NR all            || { exit 1; }
 make --quiet -j $PROC_NR install        || { exit 1; }
 make --quiet -j $PROC_NR clean          || { exit 1; }
+
+## Store build information
+BUILD_FILE="${PSPDEV}/build.txt"
+if [[ -f "${BUILD_FILE}" ]]; then
+  sed -i'' '/^ebootsigner /d' "${BUILD_FILE}"
+fi
+git log -1 --format="ebootsigner %H %cs %s" >> "${BUILD_FILE}"
