@@ -11,28 +11,5 @@ else
 	cd $REPO_FOLDER && git fetch origin && git reset --hard origin/${BRANCH_NAME} || { exit 1; }
 fi
 
-## Determine the maximum number of processes that Make can work with.
-PROC_NR=$(getconf _NPROCESSORS_ONLN)
-
 ## Boostrap and config
-./bootstrap || { exit 1; }
-./configure --quiet || { exit 1; }
-
-## Compile and install.
-make --quiet -j $PROC_NR clean          || { exit 1; }
-make --quiet -j $PROC_NR all            || { exit 1; }
-make --quiet -j $PROC_NR install        || { exit 1; }
-make --quiet -j $PROC_NR clean          || { exit 1; }
-
-## gcc needs to include libcglue libpthreadglue libpsputility libpsprtc libpspnet_inet libpspnet_resolver libpspsdk libpspmodinfo libpspuser libpspkernel
-## from pspsdk to be able to build executables, because they are part of the standard libraries
-(cd "$PSPDEV/psp/lib" && ln -sf ../sdk/lib/libcglue.a .) || { exit 1; }
-(cd "$PSPDEV/psp/lib" && ln -sf ../sdk/lib/libpthreadglue.a .) || { exit 1; }
-(cd "$PSPDEV/psp/lib" && ln -sf ../sdk/lib/libpsputility.a .) || { exit 1; }
-(cd "$PSPDEV/psp/lib" && ln -sf ../sdk/lib/libpsprtc.a .) || { exit 1; }
-(cd "$PSPDEV/psp/lib" && ln -sf ../sdk/lib/libpspnet_inet.a .) || { exit 1; }
-(cd "$PSPDEV/psp/lib" && ln -sf ../sdk/lib/libpspnet_resolver.a .) || { exit 1; }
-(cd "$PSPDEV/psp/lib" && ln -sf ../sdk/lib/libpspsdk.a .) || { exit 1; }
-(cd "$PSPDEV/psp/lib" && ln -sf ../sdk/lib/libpspmodinfo.a .) || { exit 1; }
-(cd "$PSPDEV/psp/lib" && ln -sf ../sdk/lib/libpspuser.a .) || { exit 1; }
-(cd "$PSPDEV/psp/lib" && ln -sf ../sdk/lib/libpspkernel.a .) || { exit 1; }
+./build-and-install.sh || { exit 1; }
