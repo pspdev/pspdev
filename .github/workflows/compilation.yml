@@ -80,12 +80,12 @@ jobs:
       run: |
         dnf -y install git
 
-    - uses: actions/checkout@v4
-
     - name: Install dependencies Fedora
       if: ${{ matrix.container[0] == 'fedora' }}
       run: |
         ./prepare.sh
+
+    - uses: actions/checkout@v4
 
     - name: Runs full build in shell
       run: |
