@@ -50,6 +50,6 @@ fi
 ## Store build information
 BUILD_FILE="${PSPDEV}/build.txt"
 if [[ -f "${BUILD_FILE}" ]]; then
-  sed -i='' '/^pspdev /d' "${BUILD_FILE}"
+  sed -i'' '/^pspdev /d' "${BUILD_FILE}"
 fi
 git log -1 --format="pspdev %H %cs %s" >> "${BUILD_FILE}"
