@@ -3,8 +3,7 @@ name: Tag-Release
 on:
   schedule:
   - cron: 0 17 1 * *
-  repository_dispatch:
-    types: [tag_release]
+  workflow_dispatch: {}
 
 jobs:
   build:
