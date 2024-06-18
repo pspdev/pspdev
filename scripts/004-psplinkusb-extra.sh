@@ -23,3 +23,10 @@ if [ "${OSVER:0:5}" != MINGW ]; then
 	make --quiet -j $PROC_NR -C pspsh install 			|| { exit 1; }
 	make --quiet -j $PROC_NR -C usbhostfs_pc install 	|| { exit 1; }
 fi
+
+## Store build information
+BUILD_FILE="${PSPDEV}/build.txt"
+if [[ -f "${BUILD_FILE}" ]]; then
+  sed -i'' '/^psplinkusb /d' "${BUILD_FILE}"
+fi
+git log -1 --format="psplinkusb %H %cs %s" >> "${BUILD_FILE}"
