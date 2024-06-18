@@ -11,6 +11,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        ssh-key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
 
     - name: Tag new release name
       run: |
