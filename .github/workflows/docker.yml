@@ -39,7 +39,7 @@ jobs:
         push: true
         tags: ghcr.io/${{ github.repository }}:${{ env.DOCKER_TAG }}
         build-args: |
-          BASE_DOCKER_IMAGE=ghcr.io/${{ github.repository_owner }}/psp-packages:${{ env.DOCKER_TAG }}
+          BASE_DOCKER_IMAGE=ghcr.io/${{ github.repository_owner }}/psp-packages:latest
 
     - name: Login to DockerHub
       uses: docker/login-action@v3
