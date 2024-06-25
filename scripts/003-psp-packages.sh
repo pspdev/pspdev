@@ -3,7 +3,7 @@
 
 if [ -z "$LOCAL_PACKAGE_BUILD" ]; then
 	# Install all packages
-	psp-pacman -Sy && psp-pacman -S --noconfirm $(psp-pacman -Slq) || { exit 1; }
+	psp-pacman -Sy && psp-pacman -S --noconfirm pspdev-default || { exit 1; }
 else
 	## Download the source code.
 	REPO_URL="https://github.com/pspdev/psp-packages"
