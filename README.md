@@ -1,8 +1,14 @@
+<div align="center">
+
 # PSPDEV
 
 [![CI](https://img.shields.io/github/actions/workflow/status/pspdev/pspdev/.github/workflows/compilation.yml?branch=master&style=for-the-badge&logo=github&label=CI)](https://github.com/pspdev/pspdev/actions?query=workflow:CI) [![CI-Docker](https://img.shields.io/github/actions/workflow/status/pspdev/pspdev/.github/workflows/docker.yml?branch=master&style=for-the-badge&logo=github&label=CI-Docker)](https://github.com/pspdev/pspdev/actions?query=workflow:CI-Docker) [![Docker Pulls](https://img.shields.io/docker/pulls/pspdev/pspdev?style=for-the-badge)](https://hub.docker.com/r/pspdev/pspdev/tags)
 
 Main PSP Repo for building the whole `PSP Development` environment in your local machine.
+
+This program will automatically build and install the whole compiler and other tools used in the creation of Homebrew software for the Sony PlayStation Portable® video game system.
+
+</div>
 
 ## Table of Contents
 
@@ -11,17 +17,12 @@ Main PSP Repo for building the whole `PSP Development` environment in your local
   - [Up and running](#up-and-running)
   - [What these scripts do](#what-these-scripts-do)
   - [Requirements](#requirements)
-    - [Ubuntu/Debian](#ubuntudebian)
-    - [Fedora](#fedora)
-    - [Arch](#arch)
-    - [OSX](#osx)
+  - [Installation from source](#installation-from-source)
   - [Docker generation](#docker-generation)
   - [Extra steps](#extra-steps)
     - [macOS](#macos)
     - [Local package builds](#local-package-builds)
   - [Thanks](#thanks)
-
-This program will automatically build and install the whole compiler and other tools used in the creation of Homebrew software for the Sony PlayStation Portable® video game system.
 
 ## Up and running
 
@@ -29,10 +30,10 @@ You can get started very quickly by grabbing the latest development pre-releases
 
 Export the `PSPDEV` environment variable to point to the `pspdev` directory. For example:
 
-  ```bash
-  export PSPDEV=~/pspdev
-  export PATH=$PATH:$PSPDEV/bin
-  ```
+```bash
+export PSPDEV=~/pspdev
+export PATH=$PATH:$PSPDEV/bin
+```
 
 ## What these scripts do
 
@@ -55,33 +56,37 @@ We offer a script to help you for installing dependencies:
 sudo ./prepare.sh
 ```
 
-1. _Optional._ If you are upgrading from the previous version of the PSPDEV environment, it is highly recommended removing the content of the PSPDEV folder before upgrade. This is a necessary step after the major toolchain upgrade.
+> [!NOTE]
+> This script will automatically detect your operating system.
 
-    ```bash
-    sudo rm -rf $PSPDEV
-    ```
+## Installation from source
 
-2. Ensure that you have enough permissions for managing PSPDEV location (default to `/usr/local/pspdev`, but you can use a different path). PSPDEV location MUST NOT have spaces or special characters in its path! PSPDEV should be an absolute path. On Unix systems, if the command `mkdir -p $PSPDEV` fails for you, you can set access for the current user by running commands:
-
+1. Ensure that you have enough permissions for managing PSPDEV location (default to `/usr/local/pspdev`, but you can use a different path). PSPDEV location MUST NOT have spaces or special characters in its path! PSPDEV should be an absolute path. On Unix systems, if the command `mkdir -p $PSPDEV` fails for you, you can set access for the current user by running commands:
     ```bash
     export PSPDEV=/usr/local/pspdev
     sudo mkdir -p $PSPDEV
     sudo chown -R $USER: $PSPDEV
     ```
 
-3. Add this to your login script (example: `~/.bash_profile`)
-    **Note:** Ensure that you have full access to the PSPDEV path. You can change the PSPDEV path with the following requirements: only use absolute paths, don't use spaces, only use Latin characters.
-
+2. Add this to your login script (example: `~/.bash_profile`)
     ```bash
     export PSPDEV=/usr/local/pspdev
     export PATH=$PATH:$PSPDEV/bin
     ```
 
-4. Run build-all.sh
+    **NOTE**: Ensure that you have full access to the PSPDEV path. You can change the PSPDEV path with the following requirements: `Only use absolute paths`, `Do not use spaces.`, `Only use Latin characters`.
 
+
+3. Run build-all.sh
     ```bash
     ./build-all.sh
     ```
+
+> [!TIP]
+> If you are upgrading from the previous version of the PSPDEV environment, it is highly recommended removing the content of the PSPDEV folder before upgrade. This is a     necessary step after the major toolchain upgrade.
+> ```bash
+> sudo rm -rf $PSPDEV
+> ```
 
 ## Docker generation
 
@@ -114,3 +119,5 @@ LOCAL_PACKAGE_BUILD=1 ./build-all.sh
 This is particularly useful if you are testing changes in the toolchain (i.e. gcc or binutils) and want to test your changes end to end. It can also be useful if you want a hermetic build and don't want to use any of the provided binaries.
 
 ## Thanks
+
+*Special thanks to all the contributors and maintainers whose efforts and commitment drive the continuous improvement of this project.*
