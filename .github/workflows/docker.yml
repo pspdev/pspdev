@@ -21,11 +21,6 @@ jobs:
       run: |
         echo "DOCKER_TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
 
-    - name: Use default DOCKER_TAG
-      if: startsWith(github.ref, 'refs/tags/') != true
-      run: |
-        echo "DOCKER_TAG=latest" >> $GITHUB_ENV
-
     - name: Login to Github registry
       uses: docker/login-action@v3
       with:
@@ -33,24 +28,53 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: ghcr.io
 
-    - uses: docker/build-push-action@v5
+    - name: Push develop to Github registry
+      uses: docker/build-push-action@v5
       with:
         context: .
         push: true
-        tags: ghcr.io/${{ github.repository }}:${{ env.DOCKER_TAG }}
+        tags: ghcr.io/${{ github.repository }}:develop
+        build-args: |
+          BASE_DOCKER_IMAGE=ghcr.io/${{ github.repository_owner }}/psp-packages:latest
+
+    - name: Push release to Github registry
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: |
+          ghcr.io/${{ github.repository }}:${{ env.DOCKER_TAG }}
+          ghcr.io/${{ github.repository }}:latest
         build-args: |
           BASE_DOCKER_IMAGE=ghcr.io/${{ github.repository_owner }}/psp-packages:latest
 
     - name: Login to DockerHub
       uses: docker/login-action@v3
+      if: github.repository_owner == 'pspdev'
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - uses: docker/build-push-action@v5
+    - name: Push develop to dockerhub
+      uses: docker/build-push-action@v5
+      if: github.repository_owner == 'pspdev'
       with:
         context: .
         push: true
-        tags: ${{ github.repository }}:${{ env.DOCKER_TAG }}
+        tags: |
+          ${{ github.repository }}:develop
+        build-args: |
+          BASE_DOCKER_IMAGE=ghcr.io/${{ github.repository_owner }}/psp-packages:latest
+
+    - name: Push release to dockerhub
+      uses: docker/build-push-action@v5
+      if: github.repository_owner == 'pspdev' && startsWith(github.ref, 'refs/tags/')
+      with:
+        context: .
+        push: true
+        tags: |
+          ${{ github.repository }}:${{ env.DOCKER_TAG }}
+          ${{ github.repository }}:latest
         build-args: |
           BASE_DOCKER_IMAGE=ghcr.io/${{ github.repository_owner }}/psp-packages:latest
