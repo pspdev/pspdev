@@ -34,7 +34,7 @@ for REPO in ${REPOS}; do
   # If the received PRs is not an empty list, add it to the final output
   if [[ ! "$(cat ${TMP_FILE})" =~ ^"[]" ]]; then
     echo "" >> "${OUTPUT_FILE}"
-    echo "###${REPO}" >> "${OUTPUT_FILE}"
+    echo "### ${REPO}" >> "${OUTPUT_FILE}"
     echo "" >> "${OUTPUT_FILE}"
     cat "${TMP_FILE}" | jq -r '.[] | "[\(.title)](\(.pr_url)) by [\(.user)](\(.user_url))"' >> "${OUTPUT_FILE}"
   fi
