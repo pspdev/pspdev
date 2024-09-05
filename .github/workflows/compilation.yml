@@ -9,7 +9,7 @@ on:
 jobs:
   prepare-release:
     runs-on: ubuntu-latest
-    if: ${{ github.ref_type == 'tag' }}
+    if: ${{ (github.ref_type == 'tag') && (github.repository_owner == 'pspdev') }}
 
     steps:
     - uses: actions/checkout@v4
