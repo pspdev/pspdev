@@ -22,7 +22,7 @@ else
 
     ubuntu | debian)
         sudo apt-get update
-        sudo apt-get -y install texinfo bison flex gettext libgmp3-dev libmpfr-dev libmpc-dev libusb-dev libreadline-dev libcurl4 libcurl4-openssl-dev libssl-dev libarchive-dev libgpgme-dev
+        sudo apt-get -y install texinfo bison flex gettext libgmp3-dev libmpfr-dev libmpc-dev libusb-dev libreadline-dev libcurl4 libcurl4-openssl-dev libssl-dev libarchive-dev libgpgme-dev python3-pip
     ;;
     rhel | fedora)
          dnf -y install @development-tools gcc gcc-c++ g++ wget git autoconf automake python3 python3-pip make cmake pkgconf \
