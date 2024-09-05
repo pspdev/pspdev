@@ -12,7 +12,6 @@ REPOS="pspdev pspsdk psptoolchain psptoolchain-allegrex psptoolchain-extra psp-p
 LAST_RELEASE="$(curl -sfL \
   -H "Accept: application/vnd.github+json" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
-  -H "Authorization: Bearer USER_ACCESS_TOKEN" \
   https://api.github.com/repos/pspdev/pspdev/releases/latest)"
 LAST_RELEASE_DATE="$(echo ${LAST_RELEASE}|jq -r '.created_at')"
 LAST_RELEASE_NAME="$(echo ${LAST_RELEASE}|jq -r '.name')"
