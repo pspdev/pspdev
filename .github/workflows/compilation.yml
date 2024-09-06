@@ -7,6 +7,28 @@ on:
     types: [run_build]
 
 jobs:
+  prepare-release:
+    runs-on: ubuntu-latest
+    if: ${{ (github.ref_type == 'tag') && (github.repository_owner == 'pspdev') }}
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Generate Changelog
+      run: |
+        echo "We are pleased to announce the ${{ github.ref_name }} release of the PSPDEV toolchain, made for homebrew development for the Playstation Portable." > changelog.md
+        echo "" >> changelog.md
+        echo "For information on how to install and use the PSPDEV toolchain, take a look [here](https://pspdev.github.io/)." >> changelog.md
+        echo "" >> changelog.md
+        ./build-changelog.sh >> changelog.md
+    - name: Create Release
+      if: ${{ github.ref_type == 'tag' }}
+      uses: softprops/action-gh-release@v2
+      with:
+        body_path: changelog.md
+        make_latest: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   build:
     runs-on: ${{ matrix.os[0] }}
     strategy:
