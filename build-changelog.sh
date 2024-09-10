@@ -36,7 +36,7 @@ for REPO in ${REPOS}; do
     echo "" >> "${OUTPUT_FILE}"
     echo "### ${REPO}" >> "${OUTPUT_FILE}"
     echo "" >> "${OUTPUT_FILE}"
-    cat "${TMP_FILE}" | jq -r '.[] | "[\(.title)](\(.pr_url)) by [\(.user)](\(.user_url))"' >> "${OUTPUT_FILE}"
+    cat "${TMP_FILE}" | jq -r '.[] | "[\(.title)](\(.pr_url)) by @\(.user)"' >> "${OUTPUT_FILE}"
   fi
   rm "${TMP_FILE}"
 done
