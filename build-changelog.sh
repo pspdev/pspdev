@@ -28,7 +28,7 @@ for REPO in ${REPOS}; do
     -H "Accept: application/vnd.github+json" \
     -H "X-GitHub-Api-Version: 2022-11-28" \
     https://api.github.com/repos/pspdev/${REPO}/pulls?state=closed | \
-    jq "[.[] | select((.merged_at != null) and (.merged_at >= \"${LAST_RELEASE_DATE}\")) | {merged_at, title, user: .user.login, user_url: .user.html_url, pr_url: .html_url}]" \
+    jq "[.[] | select((.merged_at != null) and (.merged_at >= \"${LAST_RELEASE_DATE}\")) | {merged_at, title, user: .user.login, pr_url: .html_url}]" \
     >> "${TMP_FILE}"
 
   # If the received PRs is not an empty list, add it to the final output
@@ -36,7 +36,7 @@ for REPO in ${REPOS}; do
     echo "" >> "${OUTPUT_FILE}"
     echo "### ${REPO}" >> "${OUTPUT_FILE}"
     echo "" >> "${OUTPUT_FILE}"
-    cat "${TMP_FILE}" | jq -r '.[] | "[\(.title)](\(.pr_url)) by [\(.user)](\(.user_url))"' >> "${OUTPUT_FILE}"
+    cat "${TMP_FILE}" | jq -r '.[] | "[\(.title)](\(.pr_url)) by @\(.user)"' >> "${OUTPUT_FILE}"
   fi
   rm "${TMP_FILE}"
 done
