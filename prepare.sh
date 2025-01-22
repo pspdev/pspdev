@@ -20,7 +20,7 @@ else
 
     case $TESTOS in
 
-    ubuntu | linuxmint | debian)
+    ubuntu | linuxmint | debian | pop)
         sudo apt-get update
         sudo apt-get -y install texinfo bison flex gettext libgmp3-dev libmpfr-dev libmpc-dev libusb-dev libreadline-dev libcurl4 \
         libcurl4-openssl-dev libssl-dev libarchive-dev libgpgme-dev python3-pip python3-venv cmake libncurses-dev automake pkg-config \
