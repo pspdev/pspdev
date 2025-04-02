@@ -13,7 +13,7 @@ LAST_RELEASE="$(curl -sfL \
   -H "Accept: application/vnd.github+json" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
   https://api.github.com/repos/pspdev/pspdev/releases/latest)"
-LAST_RELEASE_DATE="$(echo ${LAST_RELEASE}|jq -r '.created_at')"
+LAST_RELEASE_DATE="$(echo ${LAST_RELEASE}|jq -r '.published_at')"
 LAST_RELEASE_NAME="$(echo ${LAST_RELEASE}|jq -r '.name')"
 
 echo "## Pull Requests Included" > "${OUTPUT_FILE}"
