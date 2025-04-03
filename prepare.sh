@@ -16,7 +16,7 @@ if [ "$(uname -s)" = "Darwin" ]; then
   fi
 else
 
-    TESTOS=$(cat /etc/os-release | grep -w "ID" | cut -d '=' -f2)
+    TESTOS=$(cat /etc/os-release | grep -w "ID" | cut -d '=' -f2 | tr -d '"')
 
     case $TESTOS in
 
@@ -38,6 +38,10 @@ else
     ;;
     arch | manjaro)
         sudo pacman -Sy gcc clang make cmake patch git texinfo flex bison gettext wget gsl gmp mpfr libmpc libusb readline libarchive gpgme bash openssl libtool libusb-compat boost python-pip
+    ;;
+    opensuse*)
+      sudo zypper install -y gcc gcc-c++ clang binutils patch make cmake bison flex gpgme libgpgme-devel libarchive-devel openssl libopenssl-devel ncurses ncurses-devel gmp-devel mpfr-devel mpc-devel \
+      automake
     ;;
     *)
         echo "$TESTOS not supported here"
