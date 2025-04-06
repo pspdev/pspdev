@@ -94,7 +94,10 @@ jobs:
     container: ${{ matrix.container[0] }}:${{ matrix.container[1] }}
     strategy:
       matrix:
-        container: [[fedora, latest]]
+        container: [
+          [fedora, latest],
+          [debian, latest]
+        ]
       fail-fast: false
 
     steps:
