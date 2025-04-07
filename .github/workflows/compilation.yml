@@ -94,7 +94,10 @@ jobs:
     container: ${{ matrix.container[0] }}:${{ matrix.container[1] }}
     strategy:
       matrix:
-        container: [[fedora, latest]]
+        container: [
+          [fedora, latest],
+          [debian, latest]
+        ]
       fail-fast: false
 
     steps:
@@ -103,10 +106,15 @@ jobs:
       run: |
         dnf -y install git
 
+    - name: Install git and sudo on Debian
+      if: ${{ matrix.container[0] == 'debian' }}
+      run: |
+        apt-get update
+        apt-get install -y git sudo
+
     - uses: actions/checkout@v4
 
-    - name: Install dependencies Fedora
-      if: ${{ matrix.container[0] == 'fedora' }}
+    - name: Install dependencies
       run: |
         ./prepare.sh
 
