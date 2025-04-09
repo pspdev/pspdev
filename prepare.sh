@@ -1,6 +1,11 @@
 #!/bin/bash
 
-echo "Detecting OS and installing packages required for PSP Toolchain"
+if [ "$EUID" != 0 ]; then
+    sudo "$0"
+    exit $?
+fi
+
+echo "Detecting OS and installing packages required for PSP SDK"
 
 #Handle macOS first
 if [ "$(uname -s)" = "Darwin" ]; then
@@ -12,7 +17,7 @@ if [ "$(uname -s)" = "Darwin" ]; then
   fi
   ## Check if using MacPorts
   if command -v port &> /dev/null; then
-    sudo port install autoconf automake cmake doxygen gsed libelf libtool pkgconfig
+    port install autoconf automake cmake doxygen gsed libelf libtool pkgconfig
   fi
 else
 
@@ -21,8 +26,8 @@ else
     case $TESTOS in
 
     ubuntu | linuxmint | debian | pop)
-        sudo apt-get update
-        sudo apt-get -y install texinfo bison flex gettext libgmp3-dev libmpfr-dev libmpc-dev libusb-dev libreadline-dev libcurl4 \
+        apt-get update
+        apt-get -y install texinfo bison flex gettext libgmp3-dev libmpfr-dev libmpc-dev libusb-dev libreadline-dev libcurl4 \
         libcurl4-openssl-dev libssl-dev libarchive-dev libgpgme-dev python3-pip python3-venv cmake libncurses-dev automake pkg-config \
         wget libtool libz-dev
     ;;
@@ -32,15 +37,15 @@ else
           libusb-compat-0.1-devel readline-devel libcurl-devel which glibc-gconv-extra xz
     ;;
     gentoo)
-        sudo emerge --noreplace net-misc/wget dev-vcs/git dev-python/pip sys-apps/fakeroot \
+        emerge --noreplace net-misc/wget dev-vcs/git dev-python/pip sys-apps/fakeroot \
                                         app-arch/libarchive app-crypt/gpgme sys-devel/bison sys-devel/flex\
                                         dev-libs/mpc dev-libs/libusb-compat
     ;;
     arch | manjaro)
-        sudo pacman -Sy gcc clang make cmake patch git texinfo flex bison gettext wget gsl gmp mpfr libmpc libusb readline libarchive gpgme bash openssl libtool libusb-compat boost python-pip
+        pacman -Sy gcc clang make cmake patch git texinfo flex bison gettext wget gsl gmp mpfr libmpc libusb readline libarchive gpgme bash openssl libtool libusb-compat boost python-pip
     ;;
     opensuse*)
-      sudo zypper install -y gcc gcc-c++ clang binutils patch make cmake bison flex gpgme libgpgme-devel libarchive-devel openssl libopenssl-devel ncurses ncurses-devel gmp-devel mpfr-devel mpc-devel \
+      zypper install -y gcc gcc-c++ clang binutils patch make cmake bison flex gpgme libgpgme-devel libarchive-devel openssl libopenssl-devel ncurses ncurses-devel gmp-devel mpfr-devel mpc-devel \
       automake
     ;;
     *)
