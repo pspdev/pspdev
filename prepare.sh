@@ -1,10 +1,5 @@
 #!/bin/bash
 
-if [ "$EUID" != 0 ]; then
-    sudo "$0"
-    exit $?
-fi
-
 echo "Detecting OS and installing packages required for PSP SDK"
 
 #Handle macOS first
@@ -17,9 +12,14 @@ if [ "$(uname -s)" = "Darwin" ]; then
   fi
   ## Check if using MacPorts
   if command -v port &> /dev/null; then
-    port install autoconf automake cmake doxygen gsed libelf libtool pkgconfig
+    sudo port install autoconf automake cmake doxygen gsed libelf libtool pkgconfig
   fi
 else
+    if [ "$EUID" != 0 ]; then
+        echo "Elevating to root so packages can be installed"
+        sudo "$0"
+        exit $?
+    fi
 
     TESTOS=$(cat /etc/os-release | grep -w "ID" | cut -d '=' -f2 | tr -d '"')
 
