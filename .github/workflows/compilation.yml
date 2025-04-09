@@ -106,11 +106,11 @@ jobs:
       run: |
         dnf -y install git
 
-    - name: Install git and sudo on Debian
+    - name: Install git on Debian
       if: ${{ matrix.container[0] == 'debian' }}
       run: |
         apt-get update
-        apt-get install -y git sudo
+        apt-get install -y git
 
     - uses: actions/checkout@v4
 
