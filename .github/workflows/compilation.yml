@@ -15,9 +15,9 @@ jobs:
     - uses: actions/checkout@v4
     - name: Generate Changelog
       run: |
-        echo "We are pleased to announce the ${{ github.ref_name }} release of the PSPDEV toolchain, made for homebrew development for the Playstation Portable." > changelog.md
+        echo "We are pleased to announce the ${{ github.ref_name }} release of our PSP SDK called PSPDEV, made for homebrew development for the Playstation Portable." > changelog.md
         echo "" >> changelog.md
-        echo "For information on how to install and use the PSPDEV toolchain, take a look [here](https://pspdev.github.io/)." >> changelog.md
+        echo "For information on how to install and use the PSPDEV SDK, take a look [here](https://pspdev.github.io/)." >> changelog.md
         echo "" >> changelog.md
         ./build-changelog.sh >> changelog.md
     - name: Create Release
