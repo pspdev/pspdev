@@ -48,4 +48,5 @@ RUN apk add --no-cache \
       cmake \
       gpgme \
       libcurl \
-      git
+      git \
+      libusb-compat
