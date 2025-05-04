@@ -95,7 +95,7 @@ jobs:
     strategy:
       matrix:
         container: [
-          [fedora, latest],
+          [fedora, 41],
           [debian, latest]
         ]
       fail-fast: false
