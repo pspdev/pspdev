@@ -22,7 +22,7 @@ jobs:
         ./build-changelog.sh >> changelog.md
     - name: Create Release
       if: ${{ github.ref_type == 'tag' }}
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v2.2.2
       with:
         body_path: changelog.md
         make_latest: true
@@ -71,7 +71,7 @@ jobs:
 
     - name: Create pre-release
       if: ${{ github.ref == 'refs/heads/master' }}
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v2.2.2
       with:
         files: pspdev-${{matrix.os[0]}}-${{matrix.os[1]}}.tar.gz
         prerelease: true
@@ -82,7 +82,7 @@ jobs:
 
     - name: Release
       if: ${{ github.ref_type == 'tag' }}
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v2.2.2
       with:
         files: pspdev-${{matrix.os[0]}}-${{matrix.os[1]}}.tar.gz
         tag_name: ${{ github.ref_name }}
@@ -136,7 +136,7 @@ jobs:
 
     - name: Create pre-release
       if: ${{ github.ref == 'refs/heads/master' }}
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v2.2.2
       with:
         files: pspdev-${{matrix.container[0]}}-${{matrix.container[1]}}.tar.gz
         prerelease: true
@@ -147,7 +147,7 @@ jobs:
 
     - name: Release
       if: ${{ github.ref_type == 'tag' }}
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v2.2.2
       with:
         files: pspdev-${{matrix.container[0]}}-${{matrix.container[1]}}.tar.gz
         tag_name: ${{ github.ref_name }}
