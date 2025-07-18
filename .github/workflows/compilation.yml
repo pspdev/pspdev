@@ -55,7 +55,7 @@ jobs:
       run: |
         export PATH="$(brew --prefix gnu-sed)/libexec/gnubin:$PATH" # This really is only needed for macOS
         export PATH="$(brew --prefix libtool)/libexec/gnubin:$PATH" # This really is only needed for macOS
-        export PKG_CONFIG_PATH="$(brew --prefix libarchive)/lib/pkgconfig:$(brew --prefix openssl)/lib/pkgconfig" #This really is only needed for macOS
+        export PKG_CONFIG_PATH="$(brew --prefix libarchive)/lib/pkgconfig:$(brew --prefix openssl)/lib/pkgconfig:$(brew --prefix libusb)/lib/pkgconfig" #This really is only needed for macOS
         export PSPDEV=$PWD/pspdev
         export PATH=$PATH:$PSPDEV/bin
         ./build-all.sh
