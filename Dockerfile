@@ -14,7 +14,7 @@ RUN apk add \
       zlib-dev \
       ucl-dev \
       readline-dev \
-      libusb-compat-dev \
+      libusb-dev \
       autoconf \
       automake \
       bison \
@@ -49,4 +49,4 @@ RUN apk add --no-cache \
       gpgme \
       libcurl \
       git \
-      libusb-compat
+      libusb
