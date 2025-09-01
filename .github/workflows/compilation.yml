@@ -47,6 +47,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
+    - name: Allow CMake to be installed on MacOS
+      if: startsWith(matrix.os[0], 'macos')
+      run: |
+        brew uninstall cmake
+
     - name : Install dependencies on required OS
       run: | 
         ./prepare.sh
