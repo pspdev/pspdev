@@ -41,7 +41,7 @@ else
                                         app-arch/libarchive app-crypt/gpgme sys-devel/bison sys-devel/flex\
                                         dev-libs/mpc dev-libs/libusb
     ;;
-    arch | manjaro | endeavouros)
+    arch | manjaro | endeavouros | cachyos)
         pacman -Sy gcc clang make cmake patch git texinfo flex bison gettext wget gsl gmp mpfr libmpc libusb readline libarchive gpgme bash openssl libtool boost python-pip
     ;;
     opensuse*)
