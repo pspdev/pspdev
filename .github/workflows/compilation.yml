@@ -35,7 +35,7 @@ jobs:
       matrix:
         os: [
           [macos-latest, arm64, bash],
-          [macos-15-latest, x86_64, bash],
+          [macos-15-intel, x86_64, bash],
           [ubuntu-latest, x86_64, bash],
           [ubuntu-24.04-arm, arm64, bash]
         ]
