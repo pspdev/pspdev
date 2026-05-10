@@ -7,7 +7,14 @@ if [ "$(uname -s)" = "Darwin" ]; then
   ## Check if using brew
   if command -v brew &> /dev/null; then
     brew update
-    brew install gettext texinfo bison flex gnu-sed ncurses gsl gmp mpfr autoconf automake cmake libusb libarchive gpgme bash openssl libtool zlib
+    brew install \
+    gettext texinfo bison \
+    flex gnu-sed ncurses \
+    gsl gmp mpfr \
+    autoconf automake cmake \
+    libusb libarchive gpgme \
+    bash openssl libtool \
+    zlib libmpc
     brew reinstall openssl # https://github.com/Homebrew/homebrew-core/issues/169728#issuecomment-2074958306
   fi
   ## Check if using MacPorts
