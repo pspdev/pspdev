@@ -27,7 +27,7 @@ RUN apk add \
       libtool \
       meson \
       ninja-build \
-      makepkg
+      pacman
 
 RUN cd /src && ./build-extra.sh
 
