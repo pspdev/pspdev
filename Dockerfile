@@ -19,14 +19,15 @@ RUN apk add \
       automake \
       bison \
       flex \
-      python3 \
-      py3-pip \
       cmake \
       pkgconfig \
       libarchive-dev \
       openssl-dev \
       gpgme-dev \
-      libtool
+      libtool \
+      meson \
+      ninja-build \
+      makepkg
 
 RUN cd /src && ./build-extra.sh
 
