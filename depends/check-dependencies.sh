@@ -31,8 +31,9 @@ check_program   gcc
 check_program   g++
 check_program   bison
 check_program   flex
-check_program   python3
-check_program   pip3
+check_program   meson
+check_program   ninja
+check_program   makepkg
 check_program   gpgme-tool
 
 # macOS uses it's own fork of libtool
