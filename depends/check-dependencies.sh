@@ -33,7 +33,6 @@ check_program   bison
 check_program   flex
 check_program   meson
 check_program   ninja
-check_program   makepkg
 check_program   gpgme-tool
 
 # macOS uses it's own fork of libtool
@@ -41,10 +40,10 @@ if [ "$(uname)" != "Darwin" ]; then
 check_program libtoolize
 else
 check_program glibtoolize
-fi 
+fi
 
 check_library   libarchive
-check_library   openssl         
+check_library   openssl
 check_library   ncurses
 
 if [ ${#missing_depends[@]} -ne 0 ]; then
