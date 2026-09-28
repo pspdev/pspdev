@@ -12,7 +12,7 @@ jobs:
     if: ${{ (github.ref_type == 'tag') && (github.repository_owner == 'pspdev') }}
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     - name: Generate Changelog
       run: |
         echo "We are pleased to announce the ${{ github.ref_name }} release of our PSP SDK called PSPDEV, made for homebrew development for the Playstation Portable." > changelog.md
@@ -22,7 +22,7 @@ jobs:
         ./build-changelog.sh >> changelog.md
     - name: Create Release
       if: ${{ github.ref_type == 'tag' }}
-      uses: softprops/action-gh-release@v2.2.2
+      uses: softprops/action-gh-release@v3
       with:
         body_path: changelog.md
         make_latest: true
@@ -45,7 +45,7 @@ jobs:
       shell: ${{ matrix.os[2] }} {0}
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     
     - name: Allow CMake to be installed on MacOS
       if: startsWith(matrix.os[0], 'macos')
@@ -69,14 +69,14 @@ jobs:
       run: |
         tar -zcvf pspdev-${{matrix.os[0]}}-${{matrix.os[1]}}.tar.gz pspdev
 
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v7
       with:
         name: pspdev-${{matrix.os[0]}}-${{matrix.os[1]}}
         path: pspdev-${{matrix.os[0]}}-${{matrix.os[1]}}.tar.gz
 
     - name: Create pre-release
       if: ${{ github.ref == 'refs/heads/master' }}
-      uses: softprops/action-gh-release@v2.2.2
+      uses: softprops/action-gh-release@v3
       with:
         files: pspdev-${{matrix.os[0]}}-${{matrix.os[1]}}.tar.gz
         prerelease: true
@@ -87,7 +87,7 @@ jobs:
 
     - name: Release
       if: ${{ github.ref_type == 'tag' }}
-      uses: softprops/action-gh-release@v2.2.2
+      uses: softprops/action-gh-release@v3
       with:
         files: pspdev-${{matrix.os[0]}}-${{matrix.os[1]}}.tar.gz
         tag_name: ${{ github.ref_name }}
@@ -117,7 +117,7 @@ jobs:
         apt-get update
         apt-get install -y git
 
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
 
     - name: Install dependencies
       run: |
@@ -134,14 +134,14 @@ jobs:
       run: |
         tar -zcvf pspdev-${{matrix.container[0]}}-${{matrix.container[1]}}.tar.gz pspdev
 
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v7
       with:
         name: pspdev-${{matrix.container[0]}}-${{matrix.container[1]}}
         path: pspdev-${{matrix.container[0]}}-${{matrix.container[1]}}.tar.gz
 
     - name: Create pre-release
       if: ${{ github.ref == 'refs/heads/master' }}
-      uses: softprops/action-gh-release@v2.2.2
+      uses: softprops/action-gh-release@v3
       with:
         files: pspdev-${{matrix.container[0]}}-${{matrix.container[1]}}.tar.gz
         prerelease: true
@@ -152,7 +152,7 @@ jobs:
 
     - name: Release
       if: ${{ github.ref_type == 'tag' }}
-      uses: softprops/action-gh-release@v2.2.2
+      uses: softprops/action-gh-release@v3
       with:
         files: pspdev-${{matrix.container[0]}}-${{matrix.container[1]}}.tar.gz
         tag_name: ${{ github.ref_name }}
